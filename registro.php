@@ -33,7 +33,7 @@ $contrasenia = sha1($contrasenia);
 
 #Metodo para comprobar si existe un usuario en la base de datos con ese nombre
 
-$comprobarUsuario = mysqli_query($db, "SELECT NOMBREUSUARIO FROM USUARIO WHERE NOMBREUSUARIO LIKE '$usuario'");
+$comprobarUsuario = mysqli_query($db, "SELECT NOMBREUSUARIO FROM TECNICO WHERE NOMBREUSUARIO LIKE '$usuario'");
 
 $numeroRegistros = mysqli_fetch_array($comprobarUsuario);
 
@@ -43,7 +43,7 @@ if($numeroRegistros > 0){
 }
 
 else{
-    $resultadoConsulta = mysqli_query($db, "INSERT INTO USUARIO (nombreusuario, contrasenia, email, telefono) values ('$usuario', '$contrasenia', '$email', '$telefono')");
+    $resultadoConsulta = mysqli_query($db, "INSERT INTO TECNICO (nombreusuario, contrasenia, email, telefono) values ('$usuario', '$contrasenia', '$email', '$telefono')");
     $_SESSION['nombreUsuario'] = $usuario;
     echo '<script>window.alert("¡Usuario registrado con éxito!");
                     window.location = "conexion_correcta.php";</script>';

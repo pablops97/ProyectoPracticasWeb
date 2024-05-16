@@ -19,7 +19,7 @@ $contrasenia = sha1($contrasenia);
 
 #extraer de la base de datos el usuario mediante consulta sql
 
-$consultaSQL = "SELECT nombreusuario, contrasenia FROM usuario WHERE nombreusuario like '$usuario' AND contrasenia like '$contrasenia'";
+$consultaSQL = "SELECT nombreusuario, contrasenia FROM TECNICO WHERE nombreusuario like '$usuario' AND contrasenia like '$contrasenia'";
 
 
 
@@ -29,10 +29,11 @@ $resultado = mysqli_query($db, $consultaSQL)
 $numeroRegistros = mysqli_fetch_array($resultado);
 
 if($numeroRegistros){
-    header('Location: conexion_correcta.php');
     $_SESSION['nombreUsuario'] = $usuario;
     #variable para comprobar la sesion con un numero >0
     $_SESSION['conectado'] = 1;
+    header('Location: dashboard/home.php');
+    
 }
 
 else{
