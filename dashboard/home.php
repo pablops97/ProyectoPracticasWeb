@@ -3,7 +3,7 @@ if (!session_id()) {
     session_start();
 }
 
-if ($_SESSION['nombreUsuario'] != null) {
+if ($_SESSION['conectado']) {
 
 ?>
     <!DOCTYPE html>
@@ -23,8 +23,8 @@ if ($_SESSION['nombreUsuario'] != null) {
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="../CSS/sidebar.css" />
         <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
-        
-        
+
+
     </head>
 
     <body>
@@ -98,17 +98,22 @@ if ($_SESSION['nombreUsuario'] != null) {
                 </li>
                 </ul>
                 <div class="sidebar-footer">
-                    <a href="cerrar_sesion.php" class="sidebar-link">
+                    <a href="../cerrar_sesion.php" class="sidebar-link">
                         <i class="lni lni-exit"></i>
                         <span>Logout</span>
                     </a>
                 </div>
             </aside>
-            <div class="main p-3">
-                
+            <div class="main">
+                <div class="container d-flex justify-content-center align-items-center vh-100">
+                    <svg class="align-self-center">
+                        <text x="50%" y="50%" dy=".35em" text-anchor="middle">
+                            Bienvenido, <?= $_SESSION["nombreUsuario"] ?>
+                        </text>
+                    </svg>
+                </div>
             </div>
-        </div>
-        <script src="../JS/sidebar.js"></script>
+            <script src="../JS/sidebar.js"></script>
     </body>
 
     </html>
@@ -117,6 +122,6 @@ if ($_SESSION['nombreUsuario'] != null) {
 
 <?php
 } else {
-    header('Location: index.php');
+    header('Location: ../index.php');
 }
 ?>

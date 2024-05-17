@@ -3,7 +3,7 @@ if (!session_id()) {
     session_start();
 }
 
-if ($_SESSION['nombreUsuario'] != null) {
+if ($_SESSION['conectado']) {
 
 ?>
     <!DOCTYPE html>
@@ -23,7 +23,18 @@ if ($_SESSION['nombreUsuario'] != null) {
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="../CSS/sidebar.css" />
         <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
-        <link rel="stylesheet" href="//cdn.datatables.net/2.0.7/css/dataTables.dataTables.min.css">
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css" />
+        <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+        <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+        
+        <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+        <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.13.4/js/dataTables.bootstrap5.min.js"></script>
+        <script>
+            $(document).ready( function () {
+            $('#tablausuarios').DataTable();
+            });
+        </script>
         
         
     </head>
@@ -99,13 +110,16 @@ if ($_SESSION['nombreUsuario'] != null) {
                 </li>
                 </ul>
                 <div class="sidebar-footer">
-                    <a href="cerrar_sesion.php" class="sidebar-link">
+                    <a href="../cerrar_sesion.php" class="sidebar-link">
                         <i class="lni lni-exit"></i>
                         <span>Logout</span>
                     </a>
                 </div>
             </aside>
-            <div class="main p-3">
+
+
+
+            <div class="main p-3 bg-light bg-opacity-50">
                 <table class="table table-striped" id="tablausuarios">
                     <thead class="bg-light">
                         <tr>
@@ -123,50 +137,53 @@ if ($_SESSION['nombreUsuario'] != null) {
 
                         if ($result = $db->query($query)) {
 
-                            /* fetch associative array */
+                            
                             while ($row = $result->fetch_assoc()) {
 
                         ?>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center">
-                                            <img src="../Images/<?= $row["imagen"] ?>" alt="" style="width: 45px; height: 45px" class="rounded-circle" />
-                                            <div class="ms-3">
-                                                <p class="fw-bold mb-1"><?= $row["nombre"] ?> <?= $row["apellidos"] ?></p>
-                                                <p class="text-muted mb-0"><?= $row["email"] ?></p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <p class="fw-normal mb-1"><?= $row["provincia"] ?> <?= $row["CP"] ?></p>
-                                        <p class="text-muted mb-0"><?= $row["direccion"] ?></p>
-                                    </td>
-                                    <td>
-                                        <span class="badge badge-success rounded-pill d-inline">Active</span>
-                                    </td>
-                                    <td>Senior</td>
-                                    <td>
-                                        <button type="button" class="btn btn-link btn-sm btn-rounded">
-                                            Edit
-                                        </button>
-                                    </td>
-                                </tr>
+                        <tr>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <img src="../Images/<?= $row["imagen"] ?>" alt="" style="width: 45px; height: 45px" class="rounded-circle" />
+                                    <div class="ms-3">
+                                        <p class="fw-bold mb-1"><?= $row["nombre"] ?> <?= $row["apellidos"] ?></p>
+                                        <p class="text-muted mb-0"><?= $row["email"] ?></p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <p class="fw-normal mb-1"><?= $row["provincia"] ?> <?= $row["CP"] ?></p>
+                                <p class="text-muted mb-0"><?= $row["direccion"] ?></p>
+                            </td>
+                            <td>
+                                <span class="badge   badge-success rounded-pill d-inline">Active</span>
+                            </td>
+                            <td><?= $row["fecha_nacimiento"]?></td>
+                            <td>
+                                <a href="editar_usuario.php?user=<?=$row["id"]?>"><i class="lni lni-pencil-alt"> Editar</i></a>
+                            </td>
+                        </tr>
 
                         <?php
                             }
                         }
                         ?>
                     </tbody>
+                    <tfoot class="bg-light">
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Provincia</th>
+                            <th>Dirección</th>
+                            <th>Fecha de nacimiento</th>
+                            <th>Actions</th>
+                        </tr>
+                    </tfoot>
                 </table>
             </div>
         </div>
         <script src="../JS/sidebar.js"></script>
-        <script src="//cdn.datatables.net/2.0.7/js/dataTables.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-qFOQ9YFAeGj1gDOuUD61g3D+tLDv3u1ECYWqT82WQoaWrOhAY+5mRMTTVsQdWutbA5FORCnkEPEgU0OF8IzGvA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-        <script>$(document).ready( function () {
-                        $.noConflict();
-                        $('#tablausuarios').DataTable();
-            } );</script>
+
+        
     </body>
 
     </html>
@@ -175,6 +192,6 @@ if ($_SESSION['nombreUsuario'] != null) {
 
 <?php
 } else {
-    header('Location: index.php');
+    header('Location:../index.php');
 }
 ?>

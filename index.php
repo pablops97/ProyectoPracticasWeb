@@ -116,29 +116,29 @@ echo '
                         <form method="post" action="registro.php">
                             <label for="nombreUsuario">Usuario</label><span class="obligatory">*</span>
                             <div class="input-group mb-3">
-                                <input type="text" class="form-control bg-light" id="nombreUsuario" name="nombreUsuario"
+                                <input type="text" class="form-control" id="nombreUsuarioRegistro" name="nombreUsuario"
                                     placeholder="Introduce nombre de usuario" minlength="5" maxlength="16" required onkeyup="verificarNombre()">
                             </div>
                             <label for="contrasenia" placeholder="Introduce contraseña">Contraseña</label><span
                                 class="obligatory">*</span>
-                            <div class="input-group mb-3"><input type="password" class="form-control bg-light"
-                                    id="contrasenia" name="contrasenia" placeholder="Introduce contraseña" minlength="7"
+                            <div class="input-group mb-3"><input type="password" class="form-control"
+                                    id="contraseniaRegistro" name="contrasenia" placeholder="Introduce contraseña" minlength="7"
                                     maxlength="16" required onkeyup="verificarContrasenia()">
                             </div>
                             <label for="email">Correo electrónico</label>
                             <div class="input-group mb-3">
-                                <input type="email" class="form-control bg-light" id="email"
+                                <input type="email" class="form-control" id="email"
                                     name="email" placeholder="Introduce correo electrónico" onkeyup="verificarEmail()">
                             </div>
                             <label for="telefono">Teléfono</label>
                             <div class="input-group mb-3">
-                                <input type="tel" class="form-control bg-light" id="telefono"
-                                    name="telefono" maxlength="9"  placeholder="Introduce su teléfono" onkeyup="verificarTelefono()">
+                                <input type="tel" class="form-control" id="telefono"
+                                    name="telefono" maxlength="9"  placeholder="Introduce su teléfono" onkeyup="verificarTelefono()" onfocusout="cleanCampos()">
                             </div>
                             
 
                             <div class="input-group mb-4">
-                                <button class="btn btn-md btn-primary w-100" id="boton" onclick="return verificarTodo()">Registrarse</button>
+                                <button class="btn btn-md btn-primary w-100" id="boton">Registrarse</button>
                             </div>
 
                             <div class="row">
@@ -161,6 +161,6 @@ echo '
 </html>';
 
     } else{
-        header('Location:conexion_correcta.php');
+        header('Location:dashboard/home.php');
     }
     ?>
