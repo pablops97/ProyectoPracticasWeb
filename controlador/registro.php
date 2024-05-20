@@ -39,14 +39,15 @@ $numeroRegistros = mysqli_fetch_array($comprobarUsuario);
 
 if($numeroRegistros > 0){
     echo '<script>window.alert("Ese usuario ya está registrado");
-                  window.location = "index.php";</script>';
+                  window.location = "../index.php";</script>';
 }
 
 else{
     $resultadoConsulta = mysqli_query($db, "INSERT INTO TECNICO (nombreusuario, contrasenia, email, telefono) values ('$usuario', '$contrasenia', '$email', '$telefono')");
     $_SESSION['nombreUsuario'] = $usuario;
+    $_SESSION['conectado'] = true;
     echo '<script>window.alert("¡Usuario registrado con éxito!");
-                    window.location = "conexion_correcta.php";</script>';
+                    location.href = "../dashboard/home.php";</script>';
     
 }
 

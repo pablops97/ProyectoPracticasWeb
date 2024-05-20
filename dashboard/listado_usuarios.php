@@ -24,6 +24,7 @@ if ($_SESSION['conectado']) {
         <link rel="stylesheet" href="../CSS/sidebar.css" />
         <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
         <link rel="stylesheet" href="https://cdn.datatables.net/1.13.5/css/jquery.dataTables.min.css" />
+        <link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.0.2/css/buttons.dataTables.css">
         <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
         <script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
         
@@ -35,6 +36,8 @@ if ($_SESSION['conectado']) {
             $('#tablausuarios').DataTable();
             });
         </script>
+        <script src="../JS/botonesDatatable.js"></script>
+        
         
         
     </head>
@@ -156,11 +159,13 @@ if ($_SESSION['conectado']) {
                                 <p class="text-muted mb-0"><?= $row["direccion"] ?></p>
                             </td>
                             <td>
-                                <span class="badge   badge-success rounded-pill d-inline">Active</span>
+                                <span class="badge badge-success rounded-pill d-inline">Active</span>
                             </td>
                             <td><?= $row["fecha_nacimiento"]?></td>
                             <td>
-                                <a href="editar_usuario.php?user=<?=$row["id"]?>"><i class="lni lni-pencil-alt"> Editar</i></a>
+                                <button class="btn btn-primary" onclick="redirectTo(<?= $row['id']?>)"><i class="lni lni-pencil-alt"></i></button>
+                                <button class="btn btn-danger"><i class="lni lni-trash-can"></i></button>
+                                <button class="btn btn-light"><i class="lni lni-printer"></i></button>
                             </td>
                         </tr>
 
@@ -175,7 +180,7 @@ if ($_SESSION['conectado']) {
                             <th>Provincia</th>
                             <th>Dirección</th>
                             <th>Fecha de nacimiento</th>
-                            <th>Actions</th>
+                            <th>Acciones</th>
                         </tr>
                     </tfoot>
                 </table>
@@ -188,7 +193,9 @@ if ($_SESSION['conectado']) {
 
     </html>
 
-
+<!-- añadir boton eliminar a la tabla y boton imprimir tabla exportar a excel pdf e imprimir y añadir 
+                        sha1 con contraseña propia
+-->
 
 <?php
 } else {

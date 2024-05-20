@@ -38,7 +38,7 @@ if($numeroRegistros){
 
 else{
     echo '<script type="text/javascript">alert("ACCESO DENEGADO");
-                    window.location = "index.php"</script>';
+                    location.href = "../index.php"</script>';
 }
 
 

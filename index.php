@@ -70,7 +70,7 @@ echo '
                         <div class="header-text mb-4">
                             <p style="text-align: center;">Inicio de sesión</p>
                         </div>
-                        <form method="post" action="iniciosesion.php" id="formulario">
+                        <form method="post" action="controlador/iniciosesion.php" id="formulario">
                             <label for="nombreUsuario">Usuario</label><span class="obligatory">*</span>
                             <div class="input-group mb-3">
                                 <input type="text" class="form-control bg-light" id="nombreUsuario" name="nombreUsuario"
@@ -97,7 +97,7 @@ echo '
                             </div>
                             
                             <div class="row">
-                                <small>¿Has olvidado la contraseña? <a class="text-primary" href="olvidar_pass.php" id="cambiarContraseña">Pulse aquí</a></small>
+                                <small>¿Has olvidado la contraseña? <a class="text-primary" href="controlador/olvidar_pass.php" id="cambiarContraseña">Pulse aquí</a></small>
                             </div>
 
                             <!--En caso de querer añadir funcionalidad con inicio de sesión mediante api de google añadir otro botón-->
@@ -113,7 +113,7 @@ echo '
                         <div class="header-text mb-4">
                             <p style="text-align: center;">Registro nuevo usuario</p>
                         </div>
-                        <form method="post" action="registro.php">
+                        <form method="post" action="controlador/registro.php">
                             <label for="nombreUsuario">Usuario</label><span class="obligatory">*</span>
                             <div class="input-group mb-3">
                                 <input type="text" class="form-control" id="nombreUsuarioRegistro" name="nombreUsuario"

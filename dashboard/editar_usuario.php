@@ -36,7 +36,7 @@ if ($_SESSION['conectado']) {
     <body>
         <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
         <div class="container d-flex justify-content-center align-items-center vh-100">
-            <div class="row flex-lg-nowrap shadow box-area">
+            <div class="row flex-lg-nowrap shadow box-area" id="contenedorDatosUsuario">
                 <div class="col-12 col-lg-auto mb-3">
                     <div class="card p-3">
                         <div class="row">
@@ -164,15 +164,7 @@ if ($_SESSION['conectado']) {
                 </div>
             </div>
 
-            <!-- Contenedor para eliminar el usuario -->
-            <div class="row eliminarusuario d-flex justify-content-center align-items-center bg-danger position-absolute text-center">
-                <div class="col">
-                    <h2>¿Desea eliminar el usuario?</h2> <i class="lni lni-warning"></i>
-                    <div class="text-muted"><small>esta acción es irreversible</small></div>
-                    <form class="form" method="get" action="delete.php"></form>
-                    <button class="btn btn-danger" value="ELIMINAR"></button>
-                </div>
-            </div>
+            
 
         </div>
 

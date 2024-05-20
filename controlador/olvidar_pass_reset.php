@@ -4,7 +4,7 @@ $valid = 'true';
 include("conexionBD.php");
 session_start();
 if (!$_SESSION['interactuando']) {
-  header('Location:index.php');
+  header('Location:../index.php');
 } else {
 
 
@@ -33,7 +33,7 @@ if (!$_SESSION['interactuando']) {
       exit;
     }
   } else {
-    header('location:index.php');
+    header('location:../index.php');
   }
 
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -91,10 +91,10 @@ if (!$_SESSION['interactuando']) {
                     <span class='glyphicon glyphicon-ok' aria-hidden='true'></span>
                     <span class='sr-only'>Error:</span>" . $message_success . "</div>";
             } ?>
-            <button type="submit" class="btn btn-primary pull-right" name="submit" style="display: block; width: 100%;">Save Password</button>
+            <button type="submit" class="btn btn-primary pull-right" name="submit" style="display: block; width: 100%;">Guardar contraseña</button>
             <br><br>
             <label>Este enlace solo funcionará una vez durante un limite de tiempo.</label>
-            <small> <a href="index.html">Vuelve al inicio</a></small>
+            <small> <a href="../index.html">Vuelve al inicio</a></small>
             <br>
           </form>
         </div>

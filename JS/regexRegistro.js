@@ -25,8 +25,8 @@ function verificarNombre(){
         nombre.classList.remove("bg-success")
         nombre.classList.add("bg-danger");
     }else{
-        nombre.classList.remove("bg-success")
-        nombre.classList.add("bg-danger");
+        nombre.classList.remove("bg-danger")
+        nombre.classList.add("bg-success");
     }
 }
 

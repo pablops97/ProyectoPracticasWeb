@@ -33,14 +33,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $mail->isSMTP();
             $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
-            $mail->Username = 'pablopps97@gmail.com';
-            $mail->Password = 'nifd yxct xyxm oqka';
+            $mail->Username = 'proyectofinciclodam@gmail.com';
+            $mail->Password = 'jukp mhji fgmw pvdk';
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port = 587; // Puerto SMTP
-            $mail->setFrom('proyectofinalprogramacion97@gmail.com', 'Pablo developer');
+            $mail->setFrom('proyectofinciclodam@gmail.com', 'Pablo developer');
             $mail->addAddress($email_reg);
             $mail->Subject = 'Nueva contraseña APP PROYECTO';
-            $htmlMsg = '<a href="localhost/login/olvidar_pass_reset.php?key=" . $key . "&email=" . $email_reg"/>';
+            $htmlMsg = '<a href="localhost/login/controlador/olvidar_pass_reset.php?key=" . $key . "&email=" . $email_reg"/>';
             $mail->Body = "^^ " . "\r\n" . "Pulse " .   $htmlMsg . " para continuar con el proceso de cambio de contraseña ^^";
             $mail->isHTML(true);
             $mail->send();
@@ -90,7 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         } ?>
                         <button type="submit" class="btn btn-primary pull-right mt-4" name="submit" style="display: block; width: 100%;">Send Email</button>
                         <br><br>
-                        <center><a href="index.php">Volver al inicio de sesión</a></center>
+                        <center><a href="../index.php">Volver al inicio de sesión</a></center>
                         <br>
                     </form>
 

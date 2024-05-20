@@ -42,13 +42,13 @@ if (!empty($updates)) {
     $sql = "UPDATE Usuario SET " . implode(', ', $updates) . " WHERE id = $id";
 
     if ($db->query($sql) === TRUE) {
-        header('Location:localhost/login/dashboard/listado_usuarios.php');
+        header('Location:../dashboard/listado_usuarios.php');
     } else {
         echo "Error actualizando el registro: " . $db->error;
     }
 } else {
     echo "<script>alert('No hay cambios que realizar');
-            location.href = 'dashboard/listado_usuarios.php';</script>";
+            location.href = '../dashboard/listado_usuarios.php';</script>";
     
 }
 
