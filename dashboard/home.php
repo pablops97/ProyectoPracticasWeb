@@ -4,7 +4,7 @@ if (!session_id()) {
 }
 
 if ($_SESSION['conectado']) {
-
+    setcookie("nombreUsuario", $_SESSION["nombreUsuario"], time()+3600);
 ?>
     <!DOCTYPE html>
     <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
@@ -98,7 +98,7 @@ if ($_SESSION['conectado']) {
                 </li>
                 </ul>
                 <div class="sidebar-footer">
-                    <a href="../cerrar_sesion.php" class="sidebar-link">
+                    <a href="../controlador/cerrar_sesion.php" class="sidebar-link">
                         <i class="lni lni-exit"></i>
                         <span>Logout</span>
                     </a>

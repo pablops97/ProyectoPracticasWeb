@@ -24,6 +24,18 @@ CREATE TABLE Usuario (
     imagen VARCHAR(255)
 );
 
+CREATE TABLE COMBINACIONTECNICO (
+    IDTECNICO INT PRIMARY KEY,
+    COMBINACION VARCHAR(255) NOT NULL,
+    FOREIGN KEY (IDTECNICO) REFERENCES TECNICO(ID)
+);
+
+CREATE TABLE COMBINACIONUSUARIO (
+    IDUSUARIO INT PRIMARY KEY,
+    COMBINACION VARCHAR(255) NOT NULL,
+    FOREIGN KEY (IDUSUARIO) REFERENCES USUARIO(ID)
+);
+
 INSERT INTO Usuario (usuario, email, password, nombre, apellidos, direccion, poblacion, CP, provincia, fecha_nacimiento, cuenta_ibam, socio, tutor, numero_socio, Fecha_alta, fecha_baja, imagen) VALUES
 ('juanlopez', 'juan.lopez@example.com', 'C0ntr@s3ñ@Segur4', 'Juan', 'López', 'Calle del Sol 25', 'Madrid', 28001, 'Madrid', '1988-05-12', 'ES01234567890123456789', 1, NULL, 12345, '2024-05-13', NULL, 'noimage.jpg'),
 ('mariagarcia', 'maria.garcia@example.com', 'G@rc14M@r14', 'María', 'García', 'Avenida de la Libertad 78', 'Barcelona', 08001, 'Barcelona', '1992-03-20', 'ES98765432109876543210', 0, NULL, NULL, '2024-05-13', NULL, 'noimage.jpg'),

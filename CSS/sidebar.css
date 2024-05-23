@@ -21,6 +21,7 @@ h1 {
     font-size: 1.5rem;
 }
 
+
 body {
     font-family: 'Poppins', sans-serif;
     background-color: #f16fa1;
@@ -158,12 +159,25 @@ svg text {
 	font-size: 100px;
 }
 
+/*CONTENEDOR ELIMINAR USUARIO*/
 
-.eliminarusuario{
-    display:none;
-    animation: popup ease-in 1s forwards;
+.wrapper{
+    z-index: 1;
 }
 
+#opacidad {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1040;
+}
+
+#confirmacionEliminarUsuario {
+    z-index: 1050;
+}
 
 
 /*ANIMACIONES*/

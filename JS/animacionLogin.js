@@ -1,4 +1,6 @@
 var card = document.getElementById('parte-delantera');
+var informacionPass = document.getElementById('informacionPass');
+
 
 document.getElementById('flip').addEventListener('click', function() {
     var parteDelantera = document.getElementById('parte-delantera');
@@ -35,12 +37,13 @@ document.getElementById('cambiarContraseña').addEventListener('click', function
 });
 
 
-document.getElementById('irInicio').addEventListener('click', function(){
-    var parteTrasera = document.getElementById('cambiar-contraseña');
-    parteTrasera.classList.add('animacion');
+//Añadir evento al boton de registrar contraseña
 
-    var parteDelantera = document.getElementById('parte-delantera');
-    parteDelantera.classList.add('animacion2');
-    parteDelantera.style.display = "inline";
-    parteTrasera.style.display = "none";
-});
+function mostrarInfo(){
+    informacionPass.classList.remove("d-none");
+};
+
+function ocultarInfo(){
+    informacionPass.classList.add("d-none");
+};
+
