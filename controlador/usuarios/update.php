@@ -1,7 +1,7 @@
 <?php
 
-include 'conexionBD.php';
-include '../utilidades/funciones.php';
+include '../conexionBD.php';
+include '../../utilidades/funciones.php';
 
 session_start();
 
@@ -11,7 +11,7 @@ $id = $_SESSION["idusuario"];
 # Identificacion de imagen 
 # SUBIR IMAGEN AL SERVIDOR
 
-$target_dir = "../Images/";
+$target_dir = "../../Images/";
 $target_file = $target_dir . basename($_FILES["cambiarImagen"]["name"]);
 $uploadOk = 1;
 $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION));
@@ -53,12 +53,13 @@ $provincia = !empty($_POST['provincia']) ? $_POST['provincia'] : null;
 $poblacion = !empty($_POST['poblacion']) ? $_POST['poblacion'] : null;
 $cp = !empty($_POST['cp']) ? $_POST['cp'] : null;
 $nuevapass = !empty($_POST['nuevapass']) ? $_POST['nuevapass'] : null;
+$confirmar_password = !empty($_POST['confirmarpass']) ? $_POST['confirmarpass'] : null;
 
 $updates = [];
 
 #comprobamos que la contraseña es igual (Lo podriamos hacer con javascript)
 if ($nuevapass && $confirmar_password && $nuevapass === $confirmar_password) {
-    $result = $conn->query("SELECT password FROM Usuario WHERE id = $id");
+    $result = $db->query("SELECT password FROM Usuario WHERE id = $id");
     $row = $result->fetch_assoc();
 
     $extraerCombinacion = "SELECT combinacion FROM combinacionusuario WHERE idusuario = ?";
@@ -87,7 +88,8 @@ if ($nuevapass && $confirmar_password && $nuevapass === $confirmar_password) {
         $updates[] = "password = '$contraseniafinal'";
     }
 } elseif ($nuevapass && $confirmar_password && $nuevapass !== $confirmar_password) {
-    die("La contraseña actual es incorrecta.");
+    echo '<script>alert("Las contraseñas no son iguales, no se modificará");
+                   </script>';                    
 }
 
 // Agregar los campos a actualizar si no están vacíos
@@ -105,11 +107,20 @@ if (!empty($updates)) {
     $sql = "UPDATE Usuario SET " . implode(', ', $updates) . " WHERE id = $id";
 
     if ($db->query($sql) === TRUE) {
+
+        # ACTUALIZAR EL LOG PARA REGISTRAR QUE TENICO HA ACTUALIZADO AL USUARIO
+        $registroLog = "INSERT INTO REGISTROLOG(MENSAJE, ID_TECNICO, ID_USUARIO) VALUES (?,?,?)";
+        $prepared = $db->prepare($registroLog);
+        $idTecnico = $_SESSION['idTecnicoActual'];
+        $mensaje = "Se ha actualizado un usuario";
+        $prepared->bind_param("sii", $mensaje, $idTecnico, $id);
+        $prepared->execute();
+
         header('Location:../dashboard/listado_usuarios.php');
     } else {
         echo "Error actualizando el registro: " . $db->error;
     }
 } else {
     echo "<script>alert('No hay cambios que realizar');
-            location.href = '../dashboard/listado_usuarios.php';</script>";
+            location.href = '../../dashboard/listado_usuarios.php';</script>";
 }

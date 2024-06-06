@@ -49,7 +49,7 @@ if ($_SESSION['conectado']) {
                         <div class="col-12 col-lg-auto mb-3">
                             <div class="card p-3">
                                 <div class="row">
-                                    <div class="mx-auto text-center">
+                                    <div class="mx-auto text-center" style="max-width: 100%;">
                                         <?php
                                         # Bucle para comprobar si la imagen existe en el directorio de imágenes, si no cargar la imagen predeterminada
                                         $files = scandir('../Images/');
@@ -59,7 +59,7 @@ if ($_SESSION['conectado']) {
                                         foreach ($files as $file) {
                                             if ($nombreImagen === $file) {
                                         ?>
-                                                <img src="../Images/<?= htmlspecialchars($fila["imagen"], ENT_QUOTES, 'UTF-8') ?>" alt="foto" style="height:300px; width:300px;">
+                                                <img src="../Images/<?= htmlspecialchars($fila["imagen"], ENT_QUOTES, 'UTF-8') ?>" alt="foto" style="max-width: 75%; height: auto;">
                                             <?php
                                                 $encontrado = true;
                                                 break;
@@ -75,7 +75,7 @@ if ($_SESSION['conectado']) {
 
                                     </div>
                                 </div>
-                                <form class="form" action="../controlador/update.php" method="post" enctype="multipart/form-data">
+                                <form class="form" action="../controlador/usuarios/update.php" method="post" enctype="multipart/form-data" id="formEditarUsuario">
                                     <div class="row mt-3 mb-3 d-none" id="contenedorCambiarImagen">
                                         <input type="file" name="cambiarImagen" id="cambiarImagen" accept="image/png, image/jpg, image/jpeg">
                                     </div>
@@ -111,13 +111,13 @@ if ($_SESSION['conectado']) {
                                                                     <div class="col">
                                                                         <div class="form-group">
                                                                             <label>Nombre</label>
-                                                                            <input class="form-control" type="text" name="nombre" placeholder="<?= $fila["nombre"] ?>">
+                                                                            <input class="form-control" type="text" name="nombre" id="nombreEditar" placeholder="<?= $fila["nombre"] ?>" oninput="restriccionNombre(value, 'nombreEditar')">
                                                                         </div>
                                                                     </div>
                                                                     <div class="col">
                                                                         <div class="form-group">
                                                                             <label>Apellidos</label>
-                                                                            <input class="form-control" type="text" name="apellidos" placeholder="<?= $fila["apellidos"] ?>">
+                                                                            <input class="form-control" type="text" name="apellidos" id="apellidosEditar" placeholder="<?= $fila["apellidos"] ?>" oninput="restriccionNombre(value, 'apellidosEditar')">
                                                                         </div>
                                                                     </div>
 
@@ -125,7 +125,7 @@ if ($_SESSION['conectado']) {
                                                                     <div class="col">
                                                                         <div class="form-group">
                                                                             <label>Nombre usuario</label>
-                                                                            <input class="form-control" type="text" name="username" placeholder="<?= $fila["usuario"] ?>">
+                                                                            <input class="form-control" type="text" name="username" id="nombreUsuarioEditar" placeholder="<?= $fila["usuario"] ?>" oninput="restriccionUsuario(value, 'nombreUsuarioEditar')">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -133,7 +133,7 @@ if ($_SESSION['conectado']) {
                                                                     <div class="col">
                                                                         <div class="form-group">
                                                                             <label>Email</label>
-                                                                            <input class="form-control" type="text" name="email" placeholder="<?= $fila["email"] ?>">
+                                                                            <input class="form-control" type="text" name="email" id="emailEditarUsuario" placeholder="<?= $fila["email"] ?>">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -154,7 +154,7 @@ if ($_SESSION['conectado']) {
                                                                     <div class="col">
                                                                         <div class="form-group">
                                                                             <label for="">Codigo Postal</label>
-                                                                            <input class="form-control" type="number" name="cp" id="cp" placeholder="<?= $fila["CP"] ?>" />
+                                                                            <input class="form-control" type="text" name="cp" id="cp" maxlength="5" minlength="5" placeholder="<?= $fila["CP"] ?>" oninput="restriccionNumero(value, 'cp')"/>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -162,7 +162,7 @@ if ($_SESSION['conectado']) {
                                                                     <div class="col">
                                                                         <div class="form-group">
                                                                             <label for="cuenta">Cuenta IBAN</label>
-                                                                            <input class="form-control" type="text" name="cuenta" id="cuenta" placeholder="<?= $fila["cuenta_iban"] ?>"></input>
+                                                                            <input class="form-control" type="text" name="cuenta" id="campoIbanEditar" placeholder="<?= $fila["cuenta_iban"] ?>" onfocus="validatePrefix('campoIbanEditar')" oninput="validatePrefix('campoIbanEditar')" onkeydown="preventBackspace(event)"></input>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -175,7 +175,7 @@ if ($_SESSION['conectado']) {
                                                                     <div class="col">
                                                                         <div class="form-group mt-2">
                                                                             <label>Nueva contraseña</label>
-                                                                            <input class="form-control" type="password" name="nuevapass" placeholder="••••••">
+                                                                            <input class="form-control" type="password" name="nuevapass" id="passEditarUsuario" placeholder="••••••" oninput="restriccionPass(value, 'passEditarUsuario')">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -183,9 +183,21 @@ if ($_SESSION['conectado']) {
                                                                     <div class="col">
                                                                         <div class="form-group mt-2">
                                                                             <label>Confirmar <span class="d-none d-xl-inline">Contraseña</span></label>
-                                                                            <input class="form-control" type="password" name="confirmarpass" placeholder="••••••">
+                                                                            <input class="form-control" type="password" name="confirmarpass" id="confirmarPassEditarUsuario" placeholder="••••••" oninput="restriccionPass(value, 'confirmarPassEditarUsuario')">
                                                                         </div>
                                                                     </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-12 col-sm-6 mb-3  mt-3">
+                                                                <div class="row alert alert-primary h-1000" role="alert" id="informacionPass">
+                                                                    <small class="text-center"> RECUERDA:</small>
+                                                                    <small> La contraseña debe tener:</small>
+                                                                    <small>- Al menos 8 caracteres</small>
+                                                                    <small>- Al menos una letra mayúscula (A-Z)</small>
+                                                                    <small>- Al menos una letra minúscula (a-z)</small>
+                                                                    <small>- Al menos tres letras minúsculas adicionales (a-z)</small>
+                                                                    <small>- Al menos un número (0-9)</small>
+                                                                    <small>- Al menos un carácter especial (!@#$&*)</small>
                                                                 </div>
                                                             </div>
 
@@ -218,7 +230,9 @@ if ($_SESSION['conectado']) {
                         </div>
                     </div>
 
-
+                    <script src="../JS/funcionesRegex.js"></script>
+                    <script src="../JS/editarusuario.js"></script>
+                    <script src="../JS/regexCrearUsuario.js"></script>
                     <script>
                         function redirectToList() {
                             location.href = "listado_usuarios.php"
@@ -240,14 +254,14 @@ if ($_SESSION['conectado']) {
 
         <body>
             <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
-            <div class="container d-flex justify-content-center align-items-center vh-100">
-                <form class="form" action="../controlador/crear_usuario.php" method="post" enctype="multipart/form-data">
+            <div class="container d-flex justify-content-center align-items-center vh-100 mt-5">
+                <form class="form-group" action="../controlador/usuarios/crear_usuario.php" method="post" enctype="multipart/form-data" id="formCrearNuevoUsuario">
                     <div class="row flex-lg-nowrap" id="contenedorDatosUsuario">
                         <div class="col-12 col-lg-auto mb-3">
                             <div class="card p-3">
                                 <div class="row">
                                     <div class="mx-auto text-center">
-                                        <img src="../Images/noimage.jpg" alt="foto" srcset="" style="height:300px; width:300px;">
+                                    <img src="../Images/noimage.jpg" alt="foto" style="max-width: 75%; height: auto;">
                                     </div>
                                 </div>
                                 <div class="mt-3 text-center">
@@ -278,13 +292,13 @@ if ($_SESSION['conectado']) {
                                                                     <div class="col">
                                                                         <div class="form-group">
                                                                             <label>Nombre</label>
-                                                                            <input class="form-control" type="text" name="nombre" id="nombreNuevoUsuario" maxlength="25" placeholder="Introduce nombre" oninput="restriccionNombre(value)" required>
+                                                                            <input class="form-control" type="text" name="nombre" id="nombreNuevoUsuario" maxlength="25" placeholder="Introduce nombre" oninput="restriccionNombre(value, 'nombreNuevoUsuario')" required>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col">
                                                                         <div class="form-group">
                                                                             <label>Apellidos</label>
-                                                                            <input class="form-control" type="text" name="apellidos" id="apellidosNuevoUsuario" placeholder="Introduce apellidos" maxlength="50" oninput="restriccionNombre(value)" required>
+                                                                            <input class="form-control" type="text" name="apellidos" id="apellidosNuevoUsuario" placeholder="Introduce apellidos" maxlength="50" oninput="restriccionApellidos(value, 'apellidosNuevoUsuario')" required>
                                                                         </div>
                                                                     </div>
 
@@ -293,13 +307,13 @@ if ($_SESSION['conectado']) {
                                                                     <div class="col">
                                                                         <div class="form-group">
                                                                             <label>Nombre usuario</label>
-                                                                            <input class="form-control" type="text" name="username" id="usernameNuevoUsuario" placeholder="Introduce un nombre de usuario" oninput="restriccionUsuario(value)" required>
+                                                                            <input class="form-control" type="text" name="username" id="usernameNuevoUsuario" placeholder="Introduce un nombre de usuario" maxlength="16" oninput="restriccionUsuario(value, 'usernameNuevoUsuario')" required>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col">
                                                                         <div class="form-group">
                                                                             <label>Email</label>
-                                                                            <input class="form-control" type="text" name="email" id="emailNuevoUsuario" placeholder="Introduce un correo electrónico" required>
+                                                                            <input class="form-control" type="text" name="email" id="emailNuevoUsuario" placeholder="Introduce un correo electrónico" maxlength="50" required onkeyup="validarEmail('emailNuevoUsuario')">
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -307,20 +321,20 @@ if ($_SESSION['conectado']) {
                                                                     <div class="col">
                                                                         <div class="form-group">
                                                                             <label for="">Provincia</label>
-                                                                            <input class="form-control" type="text" name="provincia" id="provinciaNuevoUsuario" required />
+                                                                            <input class="form-control" type="text" name="provincia" id="provinciaNuevoUsuario" required maxlength="25"/>
                                                                         </div>
                                                                     </div>
 
                                                                     <div class="col">
                                                                         <div class="form-group">
                                                                             <label for="">Población</label>
-                                                                            <input class="form-control" type="text" id="poblacionNuevoUsuario" name="poblacion" required />
+                                                                            <input class="form-control" type="text" id="poblacionNuevoUsuario" name="poblacion" required maxlength="25"/>
                                                                         </div>
                                                                     </div>
                                                                     <div class="col">
                                                                         <div class="form-group">
                                                                             <label for="">Codigo Postal</label>
-                                                                            <input class="form-control" type="number" name="cp" id="cpNuevoUsuario" required />
+                                                                            <input class="form-control" type="text" name="cp" id="cpNuevoUsuario" maxlength="5" oninput="restriccionNumero(value, 'cpNuevoUsuario')" required />
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -328,15 +342,15 @@ if ($_SESSION['conectado']) {
                                                                     <div class="col">
                                                                         <div class="form-group">
                                                                             <label for="">Dirección</label>
-                                                                            <input class="form-control" type="text" name="direccion" id="direccionNuevoUsuario" required />
+                                                                            <input class="form-control" type="text" name="direccion" id="direccionNuevoUsuario" onblur="autorellenarPoblacion('direccionNuevoUsuario', 'poblacionNuevoUsuario')" required />
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                                 <div class="row mt-2">
                                                                     <div class="col">
                                                                         <div class="form-group">
-                                                                            <label for="cuenta">Cuenta IBAN</label>
-                                                                            <input class="form-control" type="text" name="cuentaIBAN" id="cuentaIBANNuevoUsuario" placeholder="ES-" maxlength="24" required></input>
+                                                                            <label for="cuenta">Cuenta IBAN (ES añadido automaticamente)</label>
+                                                                            <input class="form-control" type="text" name="cuentaIBAN" id="cuentaIBANNuevoUsuario" placeholder="Introduce solo los numeros" maxlength="22" minlength="22" oninput="restriccionNumero(value,'cuentaIBANNuevoUsuario')" required></input>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -369,7 +383,7 @@ if ($_SESSION['conectado']) {
                                                                     <div class="col">
                                                                         <div class="form-group mt-2">
                                                                             <label>Nueva contraseña</label>
-                                                                            <input class="form-control" type="password" name="nuevapass" id="nuevaPassNuevoUsuario" placeholder="••••••">
+                                                                            <input class="form-control" type="password" name="nuevapass" id="nuevaPassNuevoUsuario" placeholder="••••••" required>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -377,9 +391,21 @@ if ($_SESSION['conectado']) {
                                                                     <div class="col">
                                                                         <div class="form-group mt-2">
                                                                             <label>Confirmar <span class="d-none d-xl-inline">Contraseña</span></label>
-                                                                            <input class="form-control" type="password" id="confirmarNuevaPassNuevoUsuario" name="confirmarpass" placeholder="••••••">
+                                                                            <input class="form-control" type="password" id="confirmarNuevaPassNuevoUsuario" name="confirmarpass" placeholder="••••••" required>
                                                                         </div>
                                                                     </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-12 col-sm-6 mb-3  mt-3">
+                                                                <div class="row alert alert-primary h-1000" role="alert" id="informacionPass">
+                                                                    <small class="text-center"> RECUERDA:</small>
+                                                                    <small> La contraseña debe tener:</small>
+                                                                    <small>- Al menos 8 caracteres</small>
+                                                                    <small>- Al menos una letra mayúscula (A-Z)</small>
+                                                                    <small>- Al menos una letra minúscula (a-z)</small>
+                                                                    <small>- Al menos tres letras minúsculas adicionales (a-z)</small>
+                                                                    <small>- Al menos un número (0-9)</small>
+                                                                    <small>- Al menos un carácter especial (!@#$&*)</small>
                                                                 </div>
                                                             </div>
 
@@ -415,6 +441,32 @@ if ($_SESSION['conectado']) {
 
             </div>
             <script src="../JS/regexCrearUsuario.js"></script>
+            <script src="../JS/funcionesRegex.js"></script>
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCn5Ya8X4aZcE5MaGErQDkUprmWgVGINGQ&libraries=places"></script>
+            <script>
+                function initAutocomplete() {
+                    // Crear el objeto de autocompletado y vincularlo al campo de dirección
+                    const input = document.getElementById('direccionNuevoUsuario');
+                    const autocomplete = new google.maps.places.Autocomplete(input);
+
+                    // Limitar las predicciones a direcciones (opcional)
+                    autocomplete.setTypes(['geocode']);
+
+                    // Establecer restricciones de país (opcional)
+                    // autocomplete.setComponentRestrictions({'country': ['us']});
+
+                    // Listener para obtener los detalles del lugar cuando el usuario selecciona una dirección
+                    autocomplete.addListener('place_changed', function() {
+                        const place = autocomplete.getPlace();
+                        console.log('Dirección seleccionada:', place.formatted_address);
+                        // Puedes realizar otras acciones con los datos de la dirección
+                    });
+                }
+
+                document.addEventListener('DOMContentLoaded', function() {
+                    initAutocomplete();
+                });
+            </script>
             <script>
                 function redirectToList() {
                     location.href = "listado_usuarios.php"

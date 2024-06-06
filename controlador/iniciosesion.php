@@ -34,6 +34,9 @@ $result = $stmt->get_result();
 $fila = $result->fetch_assoc();
 
 if ($fila) {
+    #Creamos la variable de sesion con el id del tecnico
+    $_SESSION['idTecnicoActual'] = $fila['id'];
+    
     #extraemos la combinacion para añadirsela a la contraseña
     $extraerID = "SELECT combinacion FROM combinaciontecnico WHERE idtecnico = ?";
     $stmt = $db->prepare($extraerID);
@@ -46,13 +49,13 @@ if ($fila) {
 
     if ($fila) {
         
-
+        
         #utilizamos bcrypt para mayor seguridad
         $contraseniafinal = hash("sha256", $contrasenia . $fila['combinacion']);
 
         #extraer de la base de datos el usuario mediante consulta sql
 
-        $consultaSQL = "SELECT nombreusuario FROM TECNICO WHERE nombreusuario like '$usuario' AND contrasenia like '$contraseniafinal'";
+        $consultaSQL = "SELECT id, nombreusuario FROM TECNICO WHERE nombreusuario like '$usuario' AND contrasenia like '$contraseniafinal'";
 
 
 
@@ -65,6 +68,15 @@ if ($fila) {
             $_SESSION['nombreUsuario'] = $usuario;
             #variable para comprobar la sesion con un numero >0
             $_SESSION['conectado'] = 1;
+            
+
+            # ACTUALIZAR EL LOG PARA REGISTRAR QUE TENICO HA INICIADO SESION Y A QUE HORA
+            $registroLog = "INSERT INTO REGISTROLOG(MENSAJE, ID_TECNICO) VALUES (?,?)";
+            $prepared = $db->prepare($registroLog);
+            $idTecnico = $_SESSION['idTecnicoActual'];
+            $mensaje = "El técnico ha iniciado sesión";
+            $prepared->bind_param("si", $mensaje, $idTecnico);
+            $prepared->execute();
 
             if (!empty($_POST["mantenerConectado"])) 
             { 
@@ -87,7 +99,7 @@ if ($fila) {
                     location.href = "../index.php"</script>';
     }
 } else {
-    echo '<script type="text/javascript">alert("No existe el usuario");
+    echo '<script type="text/javascript">alert("Datos incorrectos");
                     location.href = "../index.php"</script>';
 }
 

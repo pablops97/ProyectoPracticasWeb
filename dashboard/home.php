@@ -4,7 +4,7 @@ if (!session_id()) {
 }
 
 if ($_SESSION['conectado']) {
-    setcookie("nombreUsuario", $_SESSION["nombreUsuario"], time()+3600);
+    setcookie("nombreUsuario", $_SESSION["nombreUsuario"], time() + 3600);
 ?>
     <!DOCTYPE html>
     <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
@@ -23,7 +23,7 @@ if ($_SESSION['conectado']) {
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="../CSS/sidebar.css" />
         <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
-
+        <title>Home</title>
 
     </head>
 
@@ -61,40 +61,16 @@ if ($_SESSION['conectado']) {
                     </li>
 
                 </ul>
-                </li>
                 <li class="sidebar-item">
-                    <a href="" class="sidebar-link">
-                        <i class="lni lni-agenda"></i>
-                        <span>Task</span>
+                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse" data-bs-target="#multi2" aria-expanded="false" aria-controls="multi2">
+                        <i class="lni lni-calendar"></i>
+                        <span>Eventos</span>
                     </a>
-                </li>
-                <!--
-                <li class="sidebar-item">
-                    <a href="#" class="sidebar-link collapsed has-dropdown" data-bs-toggle="collapse" data-bs-target="#auth" aria-expanded="false" aria-controls="auth">
-                        <i class="lni lni-protection"></i>
-                        <span>Auth</span>
-                    </a>
-                    <ul id="auth" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+                    <ul id="multi2" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
                         <li class="sidebar-item">
-                            <a href="#" class="sidebar-link">Login</a>
-                        </li>
-                        <li class="sidebar-item">
-                            <a href="#" class="sidebar-link">Register</a>
+                            <a href="listado_eventos.php" class="sidebar-link">Lista de eventos</a>
                         </li>
                     </ul>
-                </li>-->
-
-                <li class="sidebar-item">
-                    <a href="" class="sidebar-link">
-                        <i class="lni lni-popup"></i>
-                        <span>Notification</span>
-                    </a>
-                </li>
-                <li class="sidebar-item">
-                    <a href="" class="sidebar-link">
-                        <i class="lni lni-cog"></i>
-                        <span>Setting</span>
-                    </a>
                 </li>
                 </ul>
                 <div class="sidebar-footer">
@@ -113,6 +89,7 @@ if ($_SESSION['conectado']) {
                     </svg>
                 </div>
             </div>
+        </div>
             <script src="../JS/sidebar.js"></script>
     </body>
 

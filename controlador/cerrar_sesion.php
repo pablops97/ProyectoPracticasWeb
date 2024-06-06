@@ -1,5 +1,14 @@
 <?php
 session_start();
+include 'conexionBD.php';
+
+# Registrar el abandono de sesion
+$registroLog = "INSERT INTO REGISTROLOG(MENSAJE, ID_TECNICO) VALUES (?,?)";
+$prepared = $db->prepare($registroLog);
+$idTecnico = $_SESSION['idTecnicoActual'];
+$mensaje = "Ha cerrado sesión";
+$prepared->bind_param("si", $mensaje, $idTecnico);
+$prepared->execute();
 
 // Destruir todas las variables de sesión.
 $_SESSION = array();

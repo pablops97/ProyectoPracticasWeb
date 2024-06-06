@@ -5,6 +5,7 @@ var email = document.getElementById('email');
 var telefono = document.getElementById('telefono');
 var boton = document.getElementById('boton');
 var celdaEmail = document.getElementById('email');
+const passwordInput = document.getElementById('contraseniaRegistro');
 
 let arrayElementos = { nombre, contrasenia, email, telefono, boton, celdaEmail };
 
@@ -33,6 +34,11 @@ function restriccionPass(inputVal) {
     var pattPermitido = /^[A-Za-z0-9!@#$&*]+$/;
      if (pattPermitido.test(inputVal)) {
         contrasenia.value = inputVal;
+        if (isValidPassword(passwordInput.value)) {
+            passwordInput.classList.add('valid-border');
+        } else {
+            passwordInput.classList.remove('valid-border');
+        }
     } else {
         
         var txt = inputVal.replace(/[^A-Za-z0-9!@#$&*]/g, '');
@@ -63,18 +69,16 @@ function verificarNombre() {
     }
 }
 
-function verificarContrasenia() {
-    console.log("contrasenia");
-    if (!contrasenia.value.match(regexContrasenia)) {
-        contrasenia.classList.remove("bg-light");
-        contrasenia.classList.remove("bg-success");
-        contrasenia.classList.add("bg-danger");
-    } else {
-        contrasenia.classList.remove("bg-danger");
-        contrasenia.classList.add("bg-success");
-    }
+
+
+function verificarContra() {
+    
 }
 
+function isValidPassword(password) {
+    const regex = /^(?=.*[A-Z])(?=.*[a-z].*[a-z].*[a-z])(?=.*\d)(?=.*[!@#$&*]).{8,}$/;
+    return regex.test(password);
+}
 
 function verificarEmail() {
 

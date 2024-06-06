@@ -20,7 +20,7 @@ function redirectTo(id) {
 }
 
 function eliminar() {
-    location.href = "../controlador/delete.php?user=" + botonConfirmarEliminacion.value;
+    location.href = "../controlador/usuarios/delete.php?user=" + botonConfirmarEliminacion.value;
 }
 
 function crearUsuario(){

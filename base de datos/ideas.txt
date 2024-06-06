@@ -1,0 +1,27 @@
+- crear tabla para almacenar log -- HECHO
+- no eliminar, dar de baja usuario y desactivar  -- HECHO
+- controlar los campos -- hecho
+- añadir comentarios -- hecho
+- añadir responsive al datatable -- DUDA
+- modificar el campo numerico del cp de crear usuario para que sea tipo texto - HECHO
+
+-- añadida funcionalidad para la direccion con api google
+
+
+
+
+
+
+-- Eventos
+
+-- relacionar usuarios con alquileres
+
+seguridad solo usar id alquiler id usuario. no hay demasiados datos en la misma tabla.
+
+libertad poniendo campos en la tabla
+
+
+no se que es lo que crea las pistas
+
+
+

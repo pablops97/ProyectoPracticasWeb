@@ -1,6 +1,9 @@
-CREATE TABLE TECNICO(	
-	NOMBREUSUARIO varchar(16) PRIMARY KEY,
-	CONTRASENIA varchar(16)
+CREATE TABLE TECNICO(
+    ID INT AUTO_INCREMENT PRIMARY KEY,	
+	NOMBREUSUARIO varchar(16),
+	CONTRASENIA varchar(16),
+    EMAIL VARCHAR(100),
+    TELEFONO INT
 )
 
 CREATE TABLE Usuario (
@@ -24,6 +27,40 @@ CREATE TABLE Usuario (
     imagen VARCHAR(255)
 );
 
+
+CREATE TABLE EVENTO(
+    ID INT AUTO_INCREMENT PRIMARY KEY,
+    TITULO_EVENTO VARCHAR(100) NOT NULL,
+    DESCRIPCION_EVENTO VARCHAR(255),
+    LOCALIZACION VARCHAR(100),
+    ESTADO VARCHAR(50),
+    PRECIO DECIMAL DEFAULT 0,
+    FECHA_INICIO_INSCRIPCION DATE,
+    FECHA_INICIO DATE,
+    FECHA_FIN DATE,
+    IDCATEGORIA INT NOT NULL,
+    NUMEROMAXPARTICIPANTES INT DEFAULT 20,
+    IMAGEN VARCHAR(100),
+    IDTECNICO INT NOT NULL,
+    FOREIGN KEY(IDTECNICO) REFERENCES TECNICO(ID),
+    FOREIGN KEY(IDCATEGORIA) REFERENCES CATEGORIA_EVENTO(ID)
+);
+
+CREATE TABLE CATEGORIA_EVENTO(
+	ID INT PRIMARY KEY,
+    NOMBRE VARCHAR(100) NOT NULL
+);
+
+
+CREATE TABLE MATRICULACION(
+    IDMATRICULACION INT AUTO_INCREMENT,
+    IDEVENTO INT NOT NULL,
+    IDUSUARIO INT NOT NULL,
+    FECHA_MATRICULACION DATE,
+    ESTADO VARCHAR(50),
+    FECHA_ANULADO DATE
+);
+
 CREATE TABLE COMBINACIONTECNICO (
     IDTECNICO INT PRIMARY KEY,
     COMBINACION VARCHAR(255) NOT NULL,
@@ -36,7 +73,20 @@ CREATE TABLE COMBINACIONUSUARIO (
     FOREIGN KEY (IDUSUARIO) REFERENCES USUARIO(ID)
 );
 
-INSERT INTO Usuario (usuario, email, password, nombre, apellidos, direccion, poblacion, CP, provincia, fecha_nacimiento, cuenta_ibam, socio, tutor, numero_socio, Fecha_alta, fecha_baja, imagen) VALUES
+CREATE TABLE REGISTROLOG(
+	ID INT AUTO_INCREMENT PRIMARY KEY,
+    MENSAJE VARCHAR(255) NOT NULL,
+	FECHA_COMPLETA_EVENTO DATETIME DEFAULT CURRENT_TIMESTAMP,
+    ID_TECNICO INT,
+    ID_USUARIO INT,
+    FOREIGN KEY(ID_TECNICO) REFERENCES TECNICO(ID),
+    FOREIGN KEY(ID_USUARIO) REFERENCES USUARIO(ID)
+);
+ALTER TABLE REGISTROLOG ADD COLUMN ID_EVENTO INT;
+ALTER TABLE REGISTROLOG ADD CONSTRAINT FK_IDEVENTO FOREIGN KEY (ID_EVENTO) REFERENCES EVENTO(ID);
+
+
+INSERT INTO Usuario (usuario, email, password, nombre, apellidos, direccion, poblacion, CP, provincia, fecha_nacimiento, cuenta_iban, socio, tutor, numero_socio, Fecha_alta, fecha_baja, imagen) VALUES
 ('juanlopez', 'juan.lopez@example.com', 'C0ntr@s3ñ@Segur4', 'Juan', 'López', 'Calle del Sol 25', 'Madrid', 28001, 'Madrid', '1988-05-12', 'ES01234567890123456789', 1, NULL, 12345, '2024-05-13', NULL, 'noimage.jpg'),
 ('mariagarcia', 'maria.garcia@example.com', 'G@rc14M@r14', 'María', 'García', 'Avenida de la Libertad 78', 'Barcelona', 08001, 'Barcelona', '1992-03-20', 'ES98765432109876543210', 0, NULL, NULL, '2024-05-13', NULL, 'noimage.jpg'),
 ('carlosmartinez', 'carlos.martinez@example.com', 'C@rl0sM@rt1n3z', 'Carlos', 'Martínez', 'Calle de la Resistencia 15', 'Valencia', 46001, 'Valencia', '1985-11-22', 'ES54321098765432109876', 1, NULL, 98765, '2024-05-13', NULL, 'noimage.jpg'),
@@ -66,4 +116,41 @@ INSERT INTO Usuario (usuario, email, password, nombre, apellidos, direccion, pob
 ('miguelmendez', 'miguel.mendez@example.com', 'M3nd3zM1gu3l', 'Miguel', 'Méndez', 'Calle de la Esperanza 11', 'Murcia', 30002, 'Murcia', '1983-08-22', 'ES71293847561029384756', 1, NULL, 67892, '2024-05-14', NULL, 'noimage.jpg'),
 ('cristinaalvarez', 'cristina.alvarez@example.com', '@lv@r3zCr1st1n@', 'Cristina', 'Álvarez', 'Avenida de la Luz 18', 'Sevilla', 41003, 'Sevilla', '1995-09-23', 'ES81293847561029384756', 0, NULL, NULL, '2024-05-14', NULL, 'noimage.jpg'),
 ('raulgonzalez', 'raul.gonzalez@example.com', 'G0nz@l3zR@ul', 'Raúl', 'González', 'Calle del Cielo 6', 'Alicante', 03002, 'Alicante', '1982-02-15', 'ES91293847561029384756', 1, NULL, 23458, '2024-05-14', NULL, 'noimage.jpg'),
-('sofiacruz', 'sofia.cruz@example.com', 'CrUzS0f14', 'Sofía', 'Cruz', 'Paseo del Parque 8', 'Toledo', 45002, 'Toledo', '1993-06-20', 'ES10293847561029384757', 0, NULL, NULL, '2024-05-14', NULL, 'noimage.jpg')
+('sofiacruz', 'sofia.cruz@example.com', 'CrUzS0f14', 'Sofía', 'Cruz', 'Paseo del Parque 8', 'Toledo', 45002, 'Toledo', '1993-06-20', 'ES10293847561029384757', 0, NULL, NULL, '2024-05-14', NULL, 'noimage.jpg');
+
+
+/*INSERT PARA EVENTOS*/
+INSERT INTO EVENTO (TITULO_EVENTO, DESCRIPCION_EVENTO, LOCALIZACION, ESTADO, PRECIO, FECHA_INICIO_INSCRIPCION, FECHA_INICIO, FECHA_FIN, IDCATEGORIA, NUMEROMAXPARTICIPANTES, IMAGEN, IDTECNICO)
+VALUES 
+('Festival de Música', 'Festival de música local con bandas emergentes', 'Plaza de España', 'Planificado', 15.00, '2024-05-01', '2024-06-20', '2024-06-20', 1, 100, 'festival.jpg', 27),
+('Taller de Pintura', 'Taller para aprender técnicas de pintura al óleo', 'Centro Cultural El Tronío', 'Planificado', 10.00, '2024-06-01', '2024-07-05', '2024-07-06', 2, 20, 'taller_pintura.jpg', 27),
+('Carrera Popular', 'Carrera popular para todas las edades', 'Parque Municipal', 'Planificado', 0.00, '2024-08-01', '2024-09-10', '2024-09-10', 3, 200, 'carrera.jpg', 27),
+('Concierto de Jazz', 'Concierto de jazz en vivo', 'Auditorio Municipal', 'Planificado', 20.00, '2024-07-01', '2024-08-15', '2024-08-15', 1, 150, 'jazz.jpg', 27),
+('Curso de Cocina', 'Curso de cocina mediterránea', 'Centro de Formación', 'Planificado', 25.00, '2024-06-15', '2024-07-12', '2024-07-13', 2, 15, 'cocina.jpg', 27),
+('Feria del Libro', 'Feria del libro con autores locales', 'Plaza Mayor', 'Planificado', 0.00, '2024-09-01', '2024-10-01', '2024-10-03', 1, 50, 'libro.jpg', 27),
+('Yoga al Aire Libre', 'Sesión de yoga al aire libre', 'Parque Los Llanos', 'Planificado', 5.00, '2024-05-15', '2024-06-30', '2024-06-30', 3, 30, 'yoga.jpg', 27),
+('Exposición de Arte', 'Exposición de arte contemporáneo', 'Sala de Exposiciones', 'Planificado', 0.00, '2024-07-01', '2024-08-01', '2024-08-15', 1, 50, 'arte.jpg', 27),
+('Cine de Verano', 'Proyección de películas al aire libre', 'Parque Municipal', 'Planificado', 3.00, '2024-06-01', '2024-07-20', '2024-07-20', 1, 100, 'cine.jpg', 27),
+('Masterclass de Fotografía', 'Clase magistral sobre técnicas fotográficas', 'Centro Cultural El Tronío', 'Planificado', 15.00, '2024-08-01', '2024-09-05', '2024-09-05', 2, 25, 'fotografia.jpg', 27),
+('Torneo de Ajedrez', 'Torneo de ajedrez para todas las edades', 'Casa de la Juventud', 'Planificado', 5.00, '2024-06-15', '2024-07-22', '2024-07-22', 3, 40, 'ajedrez.jpg', 27),
+('Concierto de Flamenco', 'Concierto de flamenco en vivo', 'Auditorio Municipal', 'Planificado', 18.00, '2024-07-01', '2024-08-30', '2024-08-30', 1, 150, 'flamenco.jpg', 27),
+('Taller de Cerámica', 'Taller para aprender técnicas de cerámica', 'Centro Cultural El Tronío', 'Planificado', 20.00, '2024-05-01', '2024-06-10', '2024-06-11', 2, 20, 'ceramica.jpg', 27),
+('Festival de Teatro', 'Festival de teatro con obras locales', 'Teatro Municipal', 'Planificado', 12.00, '2024-08-01', '2024-09-15', '2024-09-17', 1, 100, 'teatro.jpg', 27),
+('Ruta de Senderismo', 'Ruta de senderismo por la sierra', 'Punto de Encuentro: Plaza Mayor', 'Planificado', 0.00, '2024-06-01', '2024-07-25', '2024-07-25', 3, 50, 'senderismo.jpg', 27),
+('Taller de Jardinería', 'Taller sobre técnicas de jardinería', 'Centro de Formación', 'Planificado', 10.00, '2024-05-01', '2024-06-15', '2024-06-16', 2, 15, 'jardineria.jpg', 27),
+('Festival Gastronómico', 'Festival con degustaciones de platos locales', 'Plaza de España', 'Planificado', 25.00, '2024-07-01', '2024-08-20', '2024-08-20', 1, 200, 'gastronomia.jpg', 27),
+('Curso de Primeros Auxilios', 'Curso básico de primeros auxilios', 'Centro de Salud', 'Planificado', 0.00, '2024-08-01', '2024-09-12', '2024-09-12', 2, 30, 'primeros_auxilios.jpg', 27),
+('Espectáculo de Magia', 'Espectáculo de magia para toda la familia', 'Teatro Municipal', 'Planificado', 8.00, '2024-06-01', '2024-07-18', '2024-07-18', 1, 100, 'magia.jpg', 27),
+('Competición de Ciclismo', 'Carrera de ciclismo amateur', 'Circuito Urbano', 'Planificado', 0.00, '2024-08-01', '2024-09-20', '2024-09-20', 3, 100, 'ciclismo.jpg', 27);
+
+
+
+/*INSERT PARA CATEGORIAS*/
+
+INSERT INTO CATEGORIA_EVENTO (ID, NOMBRE) VALUES (1, 'Educativo');
+INSERT INTO CATEGORIA_EVENTO (ID, NOMBRE) VALUES (2, 'Social');
+INSERT INTO CATEGORIA_EVENTO (ID, NOMBRE) VALUES (3, 'Cultural');
+INSERT INTO CATEGORIA_EVENTO (ID, NOMBRE) VALUES (4, 'Deportivo');
+INSERT INTO CATEGORIA_EVENTO (ID, NOMBRE) VALUES (5, 'Empresarial');
+INSERT INTO CATEGORIA_EVENTO (ID, NOMBRE) VALUES (6, 'Tecnológico');
+INSERT INTO CATEGORIA_EVENTO (ID, NOMBRE) VALUES (7, 'Benéfico');

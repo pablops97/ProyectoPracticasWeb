@@ -10,10 +10,10 @@ if ($_SESSION['conectado']) {
     header('Location:localhost/login/index.html');
 } else {
 
-    $usuario = $_POST['nombreUsuario'];
-    $contrasenia = $_POST['contrasenia'];
-    $email = $_POST['email'];
-    $telefono = $_POST['telefono'];
+    $usuario = $_POST['nombreUsuarioRegistro'];
+    $contrasenia = $_POST['contraseniaRegistro'];
+    $email = $_POST['emailRegistro'];
+    $telefono = $_POST['telefonoRegistro'];
 
     # Prevenir sql injection
 
