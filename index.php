@@ -37,9 +37,8 @@ if (!$_SESSION['conectado']) {
             }
         </script>
         <style>
-            form i {
-                margin-left: -30px;
-                cursor: pointer;
+            body{
+                font-family: 'Poppins', sans-serif;
             }
         </style>
         <script>
@@ -132,7 +131,7 @@ if (!$_SESSION['conectado']) {
                             <div class="header-text mb-4">
                                 <p style="text-align: center;">Registro nuevo usuario</p>
                             </div>
-                            <form method="post" action="controlador/registro.php">
+                            <form method="post" action="controlador/registro.php" id="formularioRegistroTecnico">
                                 <label for="nombreUsuario">Usuario</label><span class="obligatory">*</span>
                                 <div class="input-group mb-3">
                                     <input type="text" class="form-control" id="nombreUsuarioRegistro" name="nombreUsuarioRegistro" placeholder="Introduce nombre de usuario" minlength="5" maxlength="16" required oninput="restriccionUsuario(value, 'nombreUsuarioRegistro')">
@@ -168,6 +167,7 @@ if (!$_SESSION['conectado']) {
 
 
         </main>
+        <script src="JS/regexCrearTecnico.js"></script>
         <script>
             //Uso de una api para comprobar si el correo existe
             function httpGetAsync(url, callback) {

@@ -42,7 +42,7 @@ if ($_SESSION['conectado']) {
 
         <div class="wrapper">
 
-        <aside id="sidebar">
+            <aside id="sidebar">
                 <div class="d-flex">
                     <button class="toggle-btn" type="button">
                         <i class="lni lni-grid-alt"></i>
@@ -67,6 +67,9 @@ if ($_SESSION['conectado']) {
                             <li class="sidebar-item">
                                 <a href="listado_usuarios.php" class="sidebar-link">Lista de usuarios</a>
                             </li>
+                            <li class="sidebar-item">
+                                <a href="editar_usuario.php?new" class="sidebar-link">Nuevo usuario</a>
+                            </li>
 
                     </li>
 
@@ -80,7 +83,16 @@ if ($_SESSION['conectado']) {
                         <li class="sidebar-item">
                             <a href="listado_eventos.php" class="sidebar-link">Lista de eventos</a>
                         </li>
+                        <li class="sidebar-item">
+                            <a href="editar_evento.php?new" class="sidebar-link">Nuevo evento</a>
+                        </li>
                     </ul>
+                </li>
+                <li class="sidebar-item">
+                    <a href="listado_usuarios_eventos.php" class="sidebar-link">
+                        <i class="lni lni-link"></i>
+                        <span>Eventos por usuario</span>
+                    </a>
                 </li>
                 </ul>
                 <div class="sidebar-footer">
@@ -91,6 +103,7 @@ if ($_SESSION['conectado']) {
                 </div>
             </aside>
             <div class="main mt-3 d-flex align-item-center justify-content-center min-vh-100">
+
                 <!-- Contenedor para eliminar el usuario -->
                 <div class="d-flex align-items-center justify-content-center min-vh-100 position-absolute top-0 start-0 w-100 d-none" id="confirmacionEliminarUsuario">
                     <div class="eliminarusuario bg-danger text-center rounded p-4">
@@ -110,100 +123,102 @@ if ($_SESSION['conectado']) {
                     </div>
                     <div class="contenedor_tabla d-flex justify-content-center align-item-center">
                         <div class="row  d-flex justify-content-center align-items-center">
-                            <table class="table table-striped display" id="tablausuarios">
+                            <div class="table-responsive">
+                                <table class="table table-striped" id="tablausuarios">
 
-                                <thead class="bg-light">
-                                    <tr>
-                                        <th class="text-center">Nombre</th>
-                                        <th class="text-center">Provincia</th>
-                                        <th class="text-center">Fecha de alta</th>
-                                        <th class="text-center">Fecha de nacimiento</th>
-                                        <th class="text-center">IBAN</th>
-                                        <th class="text-center">Acciones</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    include '../controlador/conexionBD.php';
-                                    $query = "SELECT * FROM usuario";
+                                    <thead class="bg-light">
+                                        <tr>
+                                            <th class="text-center">Nombre</th>
+                                            <th class="text-center">Provincia</th>
+                                            <th class="text-center">Fecha de alta</th>
+                                            <th class="text-center">Fecha de nacimiento</th>
+                                            <th class="text-center">IBAN</th>
+                                            <th class="text-center">Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        include '../controlador/conexionBD.php';
+                                        $query = "SELECT * FROM usuario";
 
-                                    if ($result = $db->query($query)) {
+                                        if ($result = $db->query($query)) {
 
 
-                                        while ($row = $result->fetch_assoc()) {
-                                            if (empty($row["fecha_baja"])) {
+                                            while ($row = $result->fetch_assoc()) {
+                                                if (empty($row["fecha_baja"])) {
 
-                                    ?>
-                                                <tr>
-                                                    <td>
-                                                        <div class="d-flex align-items-center">
-                                                            <?php
-
-                                                            # Bucle para comprobar si la imagen existe en el directorio de imágenes, si no cargar la imagen predeterminada
-                                                            $files = scandir('../Images/');
-                                                            $encontrado = false;
-                                                            $nombreImagen = basename($row["imagen"]);
-
-                                                            foreach ($files as $file) {
-                                                                if ($nombreImagen === $file) {
-                                                            ?>
-                                                                    <img src="../Images/<?= htmlspecialchars($row["imagen"], ENT_QUOTES, 'UTF-8') ?>" alt="foto" style="width: 45px; height: 45px" class="rounded-circle">
+                                        ?>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="d-flex align-items-center">
                                                                 <?php
-                                                                    $encontrado = true;
-                                                                    break;
-                                                                }
-                                                            }
 
-                                                            if (!$encontrado) {
+                                                                # Bucle para comprobar si la imagen existe en el directorio de imágenes, si no cargar la imagen predeterminada
+                                                                $files = scandir('../Images/');
+                                                                $encontrado = false;
+                                                                $nombreImagen = basename($row["imagen"]);
+
+                                                                foreach ($files as $file) {
+                                                                    if ($nombreImagen === $file) {
                                                                 ?>
-                                                                <img src="../Images/noimage.jpg" alt="foto" style="width: 45px; height: 45px" class="rounded-circle">
-                                                            <?php
-                                                            }
-                                                            ?>
-                                                            <div class="ms-3">
-                                                                <p class="fw-bold mb-1"><?= $row["nombre"] ?> <?= $row["apellidos"] ?></p>
-                                                                <p class="text-muted mb-0"><?= $row["email"] ?></p>
+                                                                        <img src="../Images/<?= htmlspecialchars($row["imagen"], ENT_QUOTES, 'UTF-8') ?>" alt="foto" style="width: 45px; height: 45px" class="rounded-circle">
+                                                                    <?php
+                                                                        $encontrado = true;
+                                                                        break;
+                                                                    }
+                                                                }
+
+                                                                if (!$encontrado) {
+                                                                    ?>
+                                                                    <img src="../Images/noimage.jpg" alt="foto" style="width: 45px; height: 45px" class="rounded-circle">
+                                                                <?php
+                                                                }
+                                                                ?>
+                                                                <div class="ms-3">
+                                                                    <p class="fw-bold mb-1"><?= $row["nombre"] ?> <?= $row["apellidos"] ?></p>
+                                                                    <p class="text-muted mb-0"><?= $row["email"] ?></p>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="text-center">
-                                                        <p class="fw-normal mb-1"><?= $row["provincia"] ?> <?= $row["CP"] ?></p>
-                                                        <p class="text-muted mb-0"><?= $row["direccion"] ?></p>
-                                                    </td>
-                                                    <td class="text-center">
-                                                        <p class="fw-normal mb-1"><?= $row["Fecha_alta"] ?></p>
-                                                    </td>
-                                                    <td class="text-center"><?= $row["fecha_nacimiento"] ?></td>
-                                                    <td class="text-center"><?= $row["cuenta_iban"] ?></td>
-                                                    <td class="text-center">
-                                                        <button class="btn btn-primary" onclick="redirectTo(<?= $row['id'] ?>)"><i class="lni lni-pencil-alt"></i></button>
-                                                        <button class="btn btn-danger" id="botonEliminarUsuario" onclick="popup(true, <?= $row['id'] ?>)" value="<?= $row['id'] ?>"><i class="lni lni-trash-can"></i></button>
-                                                    </td>
-                                                </tr>
-                                    <?php
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <p class="fw-normal mb-1"><?= $row["provincia"] ?> <?= $row["CP"] ?></p>
+                                                            <p class="text-muted mb-0"><?= $row["direccion"] ?></p>
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <p class="fw-normal mb-1"><?= $row["Fecha_alta"] ?></p>
+                                                        </td>
+                                                        <td class="text-center"><?= $row["fecha_nacimiento"] ?></td>
+                                                        <td class="text-center"><?= $row["cuenta_iban"] ?></td>
+                                                        <td class="text-center">
+                                                            <button class="btn btn-primary" onclick="redirectTo(<?= $row['id'] ?>)"><i class="lni lni-pencil-alt"></i></button>
+                                                            <button class="btn btn-danger" id="botonEliminarUsuario" onclick="popup(true, <?= $row['id'] ?>)" value="<?= $row['id'] ?>"><i class="lni lni-trash-can"></i></button>
+                                                        </td>
+                                                    </tr>
+                                        <?php
+                                                }
                                             }
+                                        } else {
+                                            echo 'error cargando los datos';
                                         }
-                                    } else {
-                                        echo 'error cargando los datos';
-                                    }
-                                    ?>
+                                        ?>
 
 
 
 
-                                </tbody>
+                                    </tbody>
 
-                                <tfoot class="bg-light">
-                                    <tr>
-                                        <th class="text-center">Nombre</th>
-                                        <th class="text-center">Provincia</th>
-                                        <th class="text-center">Dirección</th>
-                                        <th class="text-center">Fecha de nacimiento</th>
-                                        <th class="text-center">IBAN</th>
-                                        <th class="text-center">Acciones</th>
-                                    </tr>
-                                </tfoot>
-                            </table>
+                                    <tfoot class="bg-light">
+                                        <tr>
+                                            <th class="text-center">Nombre</th>
+                                            <th class="text-center">Provincia</th>
+                                            <th class="text-center">Dirección</th>
+                                            <th class="text-center">Fecha de nacimiento</th>
+                                            <th class="text-center">IBAN</th>
+                                            <th class="text-center">Acciones</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
                         </div>
 
 
@@ -243,7 +258,10 @@ if ($_SESSION['conectado']) {
                         buttons: ['copyHtml5', 'excelHtml5', 'csvHtml5', 'pdfHtml5']
                     }
 
-                }
+                },
+                responsive: true,
+                scrollX: true,
+                scrollY: 500
 
             });
         </script>

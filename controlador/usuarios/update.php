@@ -116,7 +116,7 @@ if (!empty($updates)) {
         $prepared->bind_param("sii", $mensaje, $idTecnico, $id);
         $prepared->execute();
 
-        header('Location:../dashboard/listado_usuarios.php');
+        header('Location:../../dashboard/listado_usuarios.php');
     } else {
         echo "Error actualizando el registro: " . $db->error;
     }

@@ -56,6 +56,9 @@ if ($_SESSION['conectado']) {
                             <li class="sidebar-item">
                                 <a href="listado_usuarios.php" class="sidebar-link">Lista de usuarios</a>
                             </li>
+                            <li class="sidebar-item">
+                                <a href="editar_usuario.php?new" class="sidebar-link">Nuevo usuario</a>
+                            </li>
                         </ul>
                     </li>
                     <li class="sidebar-item">
@@ -67,7 +70,16 @@ if ($_SESSION['conectado']) {
                             <li class="sidebar-item">
                                 <a href="listado_eventos.php" class="sidebar-link">Lista de eventos</a>
                             </li>
+                            <li class="sidebar-item">
+                                <a href="editar_evento.php?new" class="sidebar-link">Nuevo evento</a>
+                            </li>
                         </ul>
+                    </li>
+                    <li class="sidebar-item">
+                        <a href="listado_usuarios_eventos.php" class="sidebar-link">
+                            <i class="lni lni-link"></i>
+                            <span>Eventos por usuario</span>
+                        </a>
                     </li>
                 </ul>
                 <div class="sidebar-footer">
@@ -119,7 +131,7 @@ if ($_SESSION['conectado']) {
                                             <?php
                                             include '../controlador/conexionBD.php';
                                             $query = "SELECT E.ID, E.TITULO_EVENTO, E.DESCRIPCION_EVENTO,E.LOCALIZACION, E.ESTADO, E.PRECIO,
-                                                  E.FECHA_INICIO_INSCRIPCION, E.FECHA_INICIO, E.FECHA_FIN, E.NUMEROMAXPARTICIPANTES, E.IMAGEN, C.NOMBRE 
+                                                  E.FECHA_INICIO_INSCRIPCION, E.FECHA_INICIO, E.FECHA_FIN, E.NUMEROMAXPARTICIPANTES, E.IMAGENEVENTO, C.NOMBRE 
                                                   FROM evento E INNER JOIN CATEGORIA_EVENTO C ON E.IDCATEGORIA = C.ID";
 
                                             if ($result = $db->query($query)) {
@@ -132,12 +144,12 @@ if ($_SESSION['conectado']) {
                                                                     <?php
                                                                     $files = scandir('../ImagenesEventos/');
                                                                     $encontrado = false;
-                                                                    $nombreImagen = basename($row["IMAGEN"]);
+                                                                    $nombreImagen = basename($row["IMAGENEVENTO"]);
 
                                                                     foreach ($files as $file) {
                                                                         if ($nombreImagen === $file) {
                                                                     ?>
-                                                                            <img src="../ImagenesEventos/<?= htmlspecialchars($row["IMAGEN"], ENT_QUOTES, 'UTF-8') ?>" alt="foto" style="width: 45px; height: 45px" class="rounded-circle">
+                                                                            <img src="../ImagenesEventos/<?= htmlspecialchars($row["IMAGENEVENTO"], ENT_QUOTES, 'UTF-8') ?>" alt="foto" style="width: 45px; height: 45px" class="rounded-circle">
                                                                         <?php
                                                                             $encontrado = true;
                                                                             break;
@@ -233,7 +245,9 @@ if ($_SESSION['conectado']) {
                         buttons: ['copyHtml5', 'excelHtml5', 'csvHtml5', 'pdfHtml5']
                     }
                 },
-                responsive: true
+                responsive: true,
+                scrollX: true,
+                scrollY: 500
             });
         </script>
     </body>

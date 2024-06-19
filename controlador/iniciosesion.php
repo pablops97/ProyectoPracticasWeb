@@ -50,7 +50,7 @@ if ($fila) {
     if ($fila) {
         
         
-        #utilizamos bcrypt para mayor seguridad
+        
         $contraseniafinal = hash("sha256", $contrasenia . $fila['combinacion']);
 
         #extraer de la base de datos el usuario mediante consulta sql

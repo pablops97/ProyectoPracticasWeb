@@ -57,6 +57,9 @@ if ($_SESSION['conectado']) {
                             <li class="sidebar-item">
                                 <a href="listado_usuarios.php" class="sidebar-link">Lista de usuarios</a>
                             </li>
+                            <li class="sidebar-item">
+                                <a href="editar_usuario.php?new" class="sidebar-link">Nuevo usuario</a>
+                            </li>
 
                     </li>
 
@@ -70,7 +73,16 @@ if ($_SESSION['conectado']) {
                         <li class="sidebar-item">
                             <a href="listado_eventos.php" class="sidebar-link">Lista de eventos</a>
                         </li>
+                        <li class="sidebar-item">
+                            <a href="editar_evento.php?new" class="sidebar-link">Nuevo evento</a>
+                        </li>
                     </ul>
+                </li>
+                <li class="sidebar-item">
+                    <a href="listado_usuarios_eventos.php" class="sidebar-link">
+                        <i class="lni lni-link"></i>
+                        <span>Eventos por usuario</span>
+                    </a>
                 </li>
                 </ul>
                 <div class="sidebar-footer">
@@ -90,7 +102,7 @@ if ($_SESSION['conectado']) {
                 </div>
             </div>
         </div>
-            <script src="../JS/sidebar.js"></script>
+        <script src="../JS/sidebar.js"></script>
     </body>
 
     </html>

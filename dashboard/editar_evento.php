@@ -17,7 +17,7 @@ if ($_SESSION['conectado']) {
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
+        <title>Editar evento</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="">
@@ -34,7 +34,7 @@ if ($_SESSION['conectado']) {
 
         include '../controlador/conexionBD.php';
         $query = "SELECT E.ID, E.TITULO_EVENTO, E.DESCRIPCION_EVENTO,E.LOCALIZACION, E.ESTADO, E.PRECIO,
-        E.FECHA_INICIO_INSCRIPCION, E.FECHA_INICIO, E.FECHA_FIN, E.NUMEROMAXPARTICIPANTES, E.IMAGEN, C.NOMBRE 
+        E.FECHA_INICIO_INSCRIPCION, E.FECHA_INICIO, E.FECHA_FIN, E.NUMEROMAXPARTICIPANTES, E.IMAGENEVENTO, C.NOMBRE 
         FROM evento E INNER JOIN CATEGORIA_EVENTO C ON E.IDCATEGORIA = C.ID
         AND E.ID = $id";
         $resultado = mysqli_query($db, $query);
@@ -54,12 +54,12 @@ if ($_SESSION['conectado']) {
                                         # Bucle para comprobar si la imagen existe en el directorio de imágenes, si no cargar la imagen predeterminada
                                         $files = scandir('../ImagenesEventos/');
                                         $encontrado = false;
-                                        $nombreImagen = basename($fila["IMAGEN"]);
+                                        $nombreImagen = basename($fila["IMAGENEVENTO"]);
 
                                         foreach ($files as $file) {
                                             if ($nombreImagen === $file) {
                                         ?>
-                                                <img src="../ImagenesEventos/<?= htmlspecialchars($fila["IMAGEN"], ENT_QUOTES, 'UTF-8') ?>" alt="foto" style="height:300px; width:300px;">
+                                                <img src="../ImagenesEventos/<?= htmlspecialchars($fila["IMAGENEVENTO"], ENT_QUOTES, 'UTF-8') ?>" alt="foto" style="height:300px; width:300px;">
                                             <?php
                                                 $encontrado = true;
                                                 break;

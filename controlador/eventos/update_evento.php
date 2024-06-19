@@ -82,7 +82,7 @@ if ($participantes) $updates[] = "NUMEROMAXPARTICIPANTES = $participantes";
 if ($fechainicioinscripcion) $updates[] = "FECHA_INICIO_INSCRIPCION = '$fechainicioinscripcion'";
 if ($fechainicio) $updates[] = "FECHA_INICIO = '$fechainicio'";
 if ($fechafin) $updates[] = "FECHA_FIN = $fechafin";
-if (!empty($imagen)) $updates[] = "IMAGEN = '$imagen'";
+if (!empty($imagen)) $updates[] = "IMAGENEVENTO = '$imagen'";
 
 // Solo ejecutar la consulta si hay algo que actualizar
 if (!empty($updates)) {

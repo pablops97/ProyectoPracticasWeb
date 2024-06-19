@@ -10,9 +10,8 @@ document.getElementById('formEditarUsuario').addEventListener('submit', function
     event.preventDefault();
     
     let password = document.getElementById('passEditarUsuario').value;
-    let confirmarPassword = document.getElementById('confirmarPassEditarUsuario').value;
     let email = document.getElementById('emailEditarUsuario').value;
-    let iban = document.getElementById('cuentaIBANNuevoUsuario').value;
+    
 
     let errores = '';
 

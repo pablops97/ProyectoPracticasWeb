@@ -134,7 +134,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           <button type="submit" class="btn btn-primary pull-right mt-2" name="submit" style="display: block; width: 100%;">Guardar contraseña</button>
           <br><br>
           <label>Este enlace solo funcionará una vez durante un limite de tiempo.</label>
-          <small> <a href="../index.html">Vuelve al inicio</a></small>
+          <small> <a href="../index.php">Vuelve al inicio</a></small>
           <br>
         </form>
       </div>

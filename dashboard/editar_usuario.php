@@ -59,7 +59,7 @@ if ($_SESSION['conectado']) {
                                         foreach ($files as $file) {
                                             if ($nombreImagen === $file) {
                                         ?>
-                                                <img src="../Images/<?= htmlspecialchars($fila["imagen"], ENT_QUOTES, 'UTF-8') ?>" alt="foto" style="max-width: 75%; height: auto;">
+                                                <img src="../Images/<?= htmlspecialchars($fila["imagen"], ENT_QUOTES, 'UTF-8') ?>" alt="foto" style="max-width: 75%; max-height: 75%; ">
                                             <?php
                                                 $encontrado = true;
                                                 break;
@@ -238,6 +238,7 @@ if ($_SESSION['conectado']) {
                             location.href = "listado_usuarios.php"
                         }
                     </script>
+                    
                 </div>
             </body>
         <?php
@@ -261,7 +262,7 @@ if ($_SESSION['conectado']) {
                             <div class="card p-3">
                                 <div class="row">
                                     <div class="mx-auto text-center">
-                                    <img src="../Images/noimage.jpg" alt="foto" style="max-width: 75%; height: auto;">
+                                    <img src="../Images/noimage.jpg" alt="foto" class="img-fluid" style="max-width: 75%; max-height: 75%; ">
                                     </div>
                                 </div>
                                 <div class="mt-3 text-center">
